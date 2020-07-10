@@ -1,6 +1,6 @@
 <?php
 
-namespace Amin\Simorgh\Queries;
+namespace AminSamadzadeh\Simorgh\Queries;
 
 use Illuminate\Support\Facades\Schema;
 

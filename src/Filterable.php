@@ -1,6 +1,6 @@
 <?php
 
-namespace Amin\Simorgh;
+namespace AminSamadzadeh\Simorgh;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;

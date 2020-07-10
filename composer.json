@@ -1,5 +1,5 @@
 {
-    "name": "amin/simorgh",
+    "name": "aminsamadzadeh/simorgh",
     "description": "add auto seraching from request",
     "type": "laravel",
     "require": {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Amin\Simorgh\Queries;
+namespace AminSamadzadeh\Simorgh\Queries;
 
 class SimpleQuery extends Query
 {

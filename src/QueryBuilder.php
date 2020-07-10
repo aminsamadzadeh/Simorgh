@@ -1,6 +1,6 @@
 <?php
 
-namespace Amin\Simorgh;
+namespace AminSamadzadeh\Simorgh;
 
 class QueryBuilder
 {
