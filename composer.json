@@ -7,7 +7,9 @@
         "illuminate/support": "^7.19"
     },
     "autoload": {
-        "Amin\\Simorgh\\": "src"
+        "psr-4": {
+            "AminSamadzadeh\\Simorgh\\": "src/"
+        }
     },
     "license": "MIT",
     "authors": [
