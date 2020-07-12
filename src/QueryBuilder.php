@@ -18,12 +18,12 @@ class QueryBuilder
             array_push($queriesObjects, new $class($query, $key, $value));
         }
 
-        $firstHandler = array_pop($queriesObjects);
+        for($i = 0; $i < count($queriesObjects); $i++)
+        {
+            if(isset($queriesObjects[$i+1]))
+                $queriesObjects[$i]->setNext($queriesObjects[$i+1]);
+        }
 
-        $handler = $firstHandler;
-        foreach($queriesObjects as $object)
-            $handler = $handler->setNext($object);
-
-        $firstHandler->handle();
+        $queriesObjects[0]->handle();
     }
 }
