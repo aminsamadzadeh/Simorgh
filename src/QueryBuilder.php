@@ -7,6 +7,7 @@ class QueryBuilder
 
     private static $queryOrders =
         [
+            'ArrayQuery',
             'IntervalQuery',
             'SimpleQuery'
         ];
