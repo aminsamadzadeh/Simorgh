@@ -15,12 +15,12 @@ class QueryBuilder
             'SimpleQuery'
         ];
 
-    public static function build(&$query, $key, $value)
+    public static function build(&$query, $key, $value, $meta = null)
     {
         $queriesObjects = [];
         foreach ( self::$queryOrders as $queryClass ){
             $class = __NAMESPACE__."\\Queries\\{$queryClass}";
-            array_push($queriesObjects, new $class($query, $key, $value));
+            array_push($queriesObjects, new $class($query, $key, $value, $meta));
         }
 
         for($i = 0; $i < count($queriesObjects); $i++)

@@ -9,13 +9,15 @@ abstract class Query implements Handler
     protected $query;
     protected $key;
     protected $value;
+    protected $meta;
     private $nextHandler;
 
-    public function __construct(&$query, $key, $value)
+    public function __construct(&$query, $key, $value, $meta = null)
     {
         $this->query = $query;
         $this->key = $key;
         $this->value = $value;
+        $this->meta = $meta ?? [];
     }
 
     abstract public function build();

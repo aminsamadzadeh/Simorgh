@@ -16,7 +16,13 @@ class SortQuery extends Query
 
     protected function getSortOrder()
     {
-        return 'asc';
+        if(!array_key_exists('sort-order', $this->meta))
+            return 'asc';
+
+        if(!in_array($this->meta['sort-order'], ['asc', 'desc']))
+            return 'asc';
+
+        return $this->meta['sort-order'];
     }
 
 }

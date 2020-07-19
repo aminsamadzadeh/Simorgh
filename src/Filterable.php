@@ -14,16 +14,17 @@ trait Filterable
     public function scopeFilter($query, Request $request)
     {
         $attributes = $request->input($this->filterName);
-        return $this->buildQuery($query, $attributes);
+        $meta = $request->input('filter-meta');
+        return $this->buildQuery($query, $attributes, $meta);
     }
 
-    protected function buildQuery($query, $attributes = null)
+    protected function buildQuery($query, $attributes = null, $meta = null)
     {
         if(is_null($attributes))
-            return;
+            return $query;
 
         foreach($this->filterableFromArray($attributes) as $key => $value)
-            QueryBuilder::build($query, $key, $value);
+            QueryBuilder::build($query, $key, $value, $meta);
     }
 
 
