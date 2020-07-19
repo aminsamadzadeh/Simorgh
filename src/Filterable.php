@@ -21,11 +21,9 @@ trait Filterable
     {
         if(is_null($attributes))
             return;
-        return $query->where(
-            function($q) use ($attributes) {
-                foreach($this->filterableFromArray($attributes) as $key => $value)
-                    QueryBuilder::build($q, $key, $value);
-            });
+
+        foreach($this->filterableFromArray($attributes) as $key => $value)
+            QueryBuilder::build($query, $key, $value);
     }
 
 
@@ -42,7 +40,9 @@ trait Filterable
         $attributes = array_filter($attributes);
 
         if (count($this->getFilterable()) > 0) {
-            return array_intersect_key($attributes, array_flip($this->getFilterable()));
+            return
+                array_intersect_key($attributes, array_flip($this->getFilterable()))
+                + $this->skipSort($attributes);
         }
 
         return
@@ -50,7 +50,14 @@ trait Filterable
                 $attributes,
                 array($this, 'schemaHasColumn'),
                 ARRAY_FILTER_USE_KEY
-            );
+            ) + $this->skipSort($attributes);
+    }
+
+    protected function skipSort(array $attributes)
+    {
+        if(array_key_exists('sort', $attributes))
+            return ['sort' => $attributes['sort']];
+        return [];
     }
 
     public function schemaHasColumn($key)
