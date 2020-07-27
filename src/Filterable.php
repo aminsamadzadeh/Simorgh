@@ -8,25 +8,28 @@ use Illuminate\Support\Facades\Schema;
 trait Filterable
 {
 
-    protected $filters = [];
     protected $filterName = "filter";
+    protected $request;
+    protected $filterQuery;
 
     public function scopeFilter($query, Request $request)
     {
-        $attributes = $request->input($this->filterName);
-        $meta = $request->input('filter-meta');
-        return $this->buildQuery($query, $attributes, $meta);
+        $this->request = $request;
+        $this->filterQuery = $query;
+        return $this->buildQuery();
     }
 
-    protected function buildQuery($query, $attributes = null, $meta = null)
+    protected function buildQuery()
     {
+        $attributes = $this->getRequestAttributes();
         if(is_null($attributes))
-            return $query;
+            return $this->filterQuery;
 
-        foreach($this->filterableFromArray($attributes) as $key => $value)
-            QueryBuilder::build($query, $key, $value, $meta);
+        $meta = $this->getFilterMeta();
+
+        foreach($this->filterableFromArray() as $key => $value)
+            QueryBuilder::build($this->filterQuery, $key, $value, $meta);
     }
-
 
     public function getFilterable()
     {
@@ -35,15 +38,37 @@ trait Filterable
         return [];
     }
 
-
-    protected function filterableFromArray(array $attributes)
+    public function getRequestAttributes()
     {
-        $attributes = array_filter($attributes);
+        if($this->request->input($this->filterName))
+        return
+            array_filter($this->request->input($this->filterName));
+    }
+
+    public function getFilterMeta()
+    {
+        return
+            array_merge($this->getDefaultMeta(), $this->getRequestMeta());
+    }
+
+    protected function getDefaultMeta()
+    {
+        return $this->filterMeta ?? [];
+    }
+
+    protected function getRequestMeta()
+    {
+        return $this->request->input('filter-meta') ?? [];
+    }
+
+    protected function filterableFromArray()
+    {
+        $attributes = $this->getRequestAttributes();
 
         if (count($this->getFilterable()) > 0) {
             return
                 array_intersect_key($attributes, array_flip($this->getFilterable()))
-                + $this->skipSort($attributes);
+                + $this->skipSort();
         }
 
         return
@@ -51,11 +76,12 @@ trait Filterable
                 $attributes,
                 array($this, 'schemaHasColumn'),
                 ARRAY_FILTER_USE_KEY
-            ) + $this->skipSort($attributes);
+            ) + $this->skipSort();
     }
 
-    protected function skipSort(array $attributes)
+    protected function skipSort()
     {
+        $attributes = $this->getRequestAttributes();
         if(array_key_exists('sort', $attributes))
             return ['sort' => $attributes['sort']];
         return [];
@@ -65,4 +91,5 @@ trait Filterable
     {
         return Schema::hasColumn($this->getTable(), $key);
     }
+
 }

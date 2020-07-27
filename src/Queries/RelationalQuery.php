@@ -10,13 +10,16 @@ class RelationalQuery extends Query
         $key = array_pop($relational);
         $relation = implode('.', $relational);
         $value = $this->value;
+        $op = $this->getOperator();
 
         $this->query->whereHas($relation,
-            function ($q) use ($key, $value) {
-                $q->where($key, $value);
+            function ($q) use ($key, $value, $op) {
+                if($op == 'like')
+                    $q->where($key, $op, "%{$value}%");
+                else
+                    $q->where($key, $op, $value);
             }
         );
-
     }
 
     public function validate()
