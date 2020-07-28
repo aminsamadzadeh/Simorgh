@@ -3,7 +3,6 @@
     "description": "add auto seraching from request",
     "type": "laravel",
     "require": {
-        "illuminate/http": "^7.19",
         "illuminate/support": "^7.19"
     },
     "autoload": {

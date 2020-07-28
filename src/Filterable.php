@@ -2,7 +2,6 @@
 
 namespace AminSamadzadeh\Simorgh;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 
 trait Filterable
@@ -12,7 +11,7 @@ trait Filterable
     protected $request;
     protected $filterQuery;
 
-    public function scopeFilter($query, Request $request)
+    public function scopeFilter($query, $request)
     {
         $this->request = $request;
         $this->filterQuery = $query;
@@ -40,9 +39,9 @@ trait Filterable
 
     public function getRequestAttributes()
     {
-        if($this->request->input($this->filterName))
-        return
-            array_filter($this->request->input($this->filterName));
+        if($this->request[$this->filterName])
+            return
+                array_filter($this->request[$this->filterName]);
     }
 
     public function getFilterMeta()
@@ -58,7 +57,7 @@ trait Filterable
 
     protected function getRequestMeta()
     {
-        return $this->request->input('filter-meta') ?? [];
+        return $this->request['filter-meta'] ?? [];
     }
 
     protected function filterableFromArray()
