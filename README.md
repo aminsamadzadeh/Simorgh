@@ -54,7 +54,7 @@ class PostController extends Controller
 
     public function index()
     {
-    	$posts = Post::filter(requst())->get();
+    	$posts = Post::filter(request()->all())->get();
         return view('users.index', compact('posts'));
     }
 
@@ -63,16 +63,19 @@ class PostController extends Controller
 
 sample of request:
 
-```url
-http://your.site/posts?name=amin&created_at=(2019/01/01,2020/01/01)&id[]=1&id[]=2&id[]=3&id[]=4
+```
+/posts?filter[name]=amin&filter[created_at]=(2019/01/01,2020/01/01)&filter[id][]=1&filter[id][]=2&filter[id][]=3&filter[id][]=4
 ```
 
 ```json
 {
-	"filter": {
-    	"name": "amin", //simple where query
-        "created_at": "(2019/01/01,2020/01/01)", //interval query
-        "id": [1,2,3,4,5] //array query
+    "filter": {
+        "name": "amin",
+        "created_at": "(2019/01/01,2020/01/01)",
+        "id": [1,2,3,4,5],
+        "category.name": "IT",
+        "tag.id": [1,2,3,4,5],
+        "sort": "created_at"
     }
 }
 ```
