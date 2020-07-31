@@ -10,11 +10,19 @@
             "AminSamadzadeh\\Simorgh\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "AminSamadzadeh\\Simorgh\\Tests\\": "tests/"
+        }
+    },
     "license": "MIT",
     "authors": [
         {
             "name": "amin",
             "email": "amin.samadzadeh@gmail.com"
         }
-    ]
+    ],
+    "require-dev": {
+        "orchestra/testbench": "^5.3"
+    }
 }
