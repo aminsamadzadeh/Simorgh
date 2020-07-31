@@ -6,7 +6,7 @@ class RelationalArrayQuery extends Query
 {
     public function build()
     {
-        $relational = $this->getRelational();
+        $relational = $this->getRelationalArray();
         $key = array_pop($relational);
         $relation = implode('.', $relational);
         $value = $this->value;
