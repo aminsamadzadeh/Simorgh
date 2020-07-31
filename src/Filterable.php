@@ -57,7 +57,13 @@ trait Filterable
 
     protected function getRequestMeta()
     {
-        return $this->request['filter-meta'] ?? [];
+        if(
+            isset($this->request['filter-meta'])
+            and is_array($this->request['filter-meta'])
+        )
+            return $this->request['filter-meta'];
+
+        return [];
     }
 
     protected function filterableFromArray()
