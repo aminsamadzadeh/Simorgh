@@ -39,7 +39,7 @@ trait Filterable
 
     public function getRequestAttributes()
     {
-        if($this->request[$this->filterName])
+        if(isset($this->request[$this->filterName]))
             return
                 array_filter($this->request[$this->filterName]);
     }
