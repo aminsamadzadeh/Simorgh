@@ -3,7 +3,7 @@
     "description": "add auto seraching from request",
     "type": "laravel",
     "require": {
-        "laravel/framework": "^7.0"
+        "laravel/framework": "^9.0"
     },
     "autoload": {
         "psr-4": {
@@ -23,6 +23,6 @@
         }
     ],
     "require-dev": {
-        "orchestra/testbench": "^5.3"
+        "orchestra/testbench": "^7.22"
     }
 }
